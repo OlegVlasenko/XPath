@@ -11,30 +11,34 @@ public class TestDateTime {
 
         Date currentDate = new Date();
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        System.out.println(formatter.format(currentDate));
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        System.out.println("Current date & time :" + formatter.format(currentDate) + " z " + currentDate.getTimezoneOffset());
+
+        formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
+
+        System.out.println("Current date & time 2 :" + formatter.format(currentDate) + " z " + currentDate.getTimezoneOffset());
 
         Date date2 = new Date(converLocalTimeToUtcTime(currentDate.toInstant().toEpochMilli()));
 
-        System.out.println(formatter.format(date2));
+        System.out.println("Convert to UTC :" + formatter.format(date2));
 
         Date date3 = convertLocalTimestamp(currentDate.toInstant().toEpochMilli());
 
-        System.out.println(formatter.format(date3));
+        System.out.println("Convert to UTC :" + formatter.format(date3));
     }
 
-    public static long getLocalToUtcDelta() {
+    private static long getLocalToUtcDelta() {
         Calendar local = Calendar.getInstance();
         local.clear();
         local.set(1970, Calendar.JANUARY, 1, 0, 0, 0);
         return local.getTimeInMillis();
     }
 
-    public static long converLocalTimeToUtcTime(long timeSinceLocalEpoch) {
+    private static long converLocalTimeToUtcTime(long timeSinceLocalEpoch) {
         return timeSinceLocalEpoch + getLocalToUtcDelta();
     }
 
-    public static Date convertLocalTimestamp(long millis)
+    private static Date convertLocalTimestamp(long millis)
     {
         TimeZone tz = TimeZone.getDefault();
         Calendar c = Calendar.getInstance(tz);
