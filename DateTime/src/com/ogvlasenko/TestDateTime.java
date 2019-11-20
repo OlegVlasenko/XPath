@@ -12,11 +12,11 @@ public class TestDateTime {
         Date currentDate = new Date();
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        System.out.println("Current date & time :" + formatter.format(currentDate) + " z " + currentDate.getTimezoneOffset());
+        System.out.println("Current date & time :" + formatter.format(currentDate));
 
-        formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
+        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-        System.out.println("Current date & time 2 :" + formatter.format(currentDate) + " z " + currentDate.getTimezoneOffset());
+        System.out.println("Current date & time 2 :" + formatter.format(currentDate));
 
         Date date2 = new Date(converLocalTimeToUtcTime(currentDate.toInstant().toEpochMilli()));
 
